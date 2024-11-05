@@ -54,13 +54,11 @@ var keys = keyMap{
 
 type LaHelp struct {
 	help help.Model
-	keys keyMap
 }
 
 func newHelp() LaHelp {
 	return LaHelp{
 		help: help.New(),
-		keys: keys,
 	}
 }
 
@@ -77,15 +75,15 @@ func (m LaHelp) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.help.Width = msg.Width
 	case tea.KeyMsg:
 		switch {
-		case key.Matches(msg, m.keys.Quit):
+		case key.Matches(msg, keys.Quit):
 			return m, tea.Quit
-		case key.Matches(msg, m.keys.Help):
+		case key.Matches(msg, keys.Help):
 			m.help.ShowAll = !m.help.ShowAll
 			return m, nil
-		case key.Matches(msg, m.keys.Up):
+		case key.Matches(msg, keys.Up):
 			counter += 1
 			return m, nil
-		case key.Matches(msg, m.keys.Down):
+		case key.Matches(msg, keys.Down):
 			counter -= 1
 			return m, nil
 		}
@@ -96,5 +94,5 @@ func (m LaHelp) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m LaHelp) View() string {
-	return fmt.Sprintf("%s\nCounter: %d", m.help.View(m.keys), counter)
+	return fmt.Sprintf("%s\nCounter: %d", m.help.View(keys), counter)
 }
